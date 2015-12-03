@@ -37,11 +37,10 @@ fi
 if [ ! -d lib ]; then
   mkdir lib
 fi
+cd lib
 
 git submodule init
 git submodule update
-
-cd lib
 
 # symlink typedarray
 if [ ! -d typedarray ]; then
@@ -69,6 +68,26 @@ if [ ! -f closure-stylesheets/build/closure-stylesheets.jar ]; then
   cd closure-stylesheets
   ant
   cd ..
+fi
+
+# build protobuf js
+if [ ! -d protobuf.js ]; then
+    mkdir protobuf.js
+    cd protobuf.js
+    curl https://raw.githubusercontent.com/dcodeIO/protobuf.js/5.0.0/dist/protobuf-light.min.js -O
+    curl https://raw.githubusercontent.com/dcodeIO/long.js/3.0.1/dist/long.min.js -O
+    
+    curl https://raw.githubusercontent.com/yahoo/coname/master/proto/timestamp.proto -O
+    curl https://raw.githubusercontent.com/yahoo/coname/master/proto/client.proto -O
+
+    # remove gogoproto import and change it to bytes
+    sed 's/import "gogoproto\/gogo.proto";//' client.proto | \
+    sed 's/\(?!bytes\)[^\s]* \([^\s]*\) = \([0-9]*\)[\s]*\(.*gogoproto.customtype\)/bytes \1 = \2; \/\/\3/g' > client-js.proto
+
+    # generate client-js.proto.json
+    pbjs client-js.proto timestamp.proto  > client-js.proto.json
+    
+    cd ..
 fi
 
 if [ -f chrome_extensions.js ]; then
