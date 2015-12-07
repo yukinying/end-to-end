@@ -85,7 +85,7 @@ if [ ! -d protobuf.js ]; then
     sed 's/\(?!bytes\)[^\s]* \([^\s]*\) = \([0-9]*\)[\s]*\(.*gogoproto.customtype\)/bytes \1 = \2; \/\/\3/g' > client-js.proto
 
     # generate client-js.proto.json
-    pbjs client-js.proto timestamp.proto  > client-js.proto.json
+    # pbjs client-js.proto timestamp.proto  > client-js.proto.json
     
     cd ..
 fi
