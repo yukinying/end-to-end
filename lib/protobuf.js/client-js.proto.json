@@ -1,0 +1,391 @@
+{
+    "package": "proto",
+    "messages": [
+        {
+            "name": "Timestamp",
+            "fields": [
+                {
+                    "rule": "optional",
+                    "type": "int64",
+                    "name": "seconds",
+                    "id": 1
+                },
+                {
+                    "rule": "optional",
+                    "type": "int32",
+                    "name": "nanos",
+                    "id": 2
+                }
+            ]
+        },
+        {
+            "name": "LookupRequest",
+            "fields": [
+                {
+                    "rule": "optional",
+                    "type": "uint64",
+                    "name": "epoch",
+                    "id": 1
+                },
+                {
+                    "rule": "optional",
+                    "type": "string",
+                    "name": "user_id",
+                    "id": 2
+                },
+                {
+                    "rule": "optional",
+                    "type": "QuorumExpr",
+                    "name": "quorum_requirement",
+                    "id": 4
+                }
+            ]
+        },
+        {
+            "name": "UpdateRequest",
+            "fields": [
+                {
+                    "rule": "optional",
+                    "type": "SignedEntryUpdate",
+                    "name": "update",
+                    "id": 1
+                },
+                {
+                    "rule": "optional",
+                    "type": "Profile",
+                    "name": "profile",
+                    "id": 2,
+                    "options": {
+                        "(gogoproto.customtype)": "EncodedProfile",
+                        "(gogoproto.nullable)": false
+                    }
+                },
+                {
+                    "rule": "optional",
+                    "type": "LookupRequest",
+                    "name": "lookup_parameters",
+                    "id": 3
+                },
+                {
+                    "rule": "optional",
+                    "type": "bytes",
+                    "name": "dkim_proof",
+                    "id": 1000,
+                    "options": {
+                        "(gogoproto.customname)": "DKIMProof"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "LookupProof",
+            "fields": [
+                {
+                    "rule": "optional",
+                    "type": "string",
+                    "name": "user_id",
+                    "id": 1
+                },
+                {
+                    "rule": "optional",
+                    "type": "bytes",
+                    "name": "index",
+                    "id": 2
+                },
+                {
+                    "rule": "optional",
+                    "type": "bytes",
+                    "name": "index_proof",
+                    "id": 3
+                },
+                {
+                    "rule": "repeated",
+                    "type": "SignedEpochHead",
+                    "name": "ratifications",
+                    "id": 4
+                },
+                {
+                    "rule": "optional",
+                    "type": "TreeProof",
+                    "name": "tree_proof",
+                    "id": 5
+                },
+                {
+                    "rule": "optional",
+                    "type": "Entry",
+                    "name": "entry",
+                    "id": 6,
+                    "options": {
+                        "(gogoproto.customtype)": "EncodedEntry",
+                        "(gogoproto.nullable)": true
+                    }
+                },
+                {
+                    "rule": "optional",
+                    "type": "bytes",
+                    "name": "profile",
+                    "id": 7
+                }
+            ]
+        },
+        {
+            "name": "TreeProof",
+            "fields": [
+                {
+                    "rule": "repeated",
+                    "type": "bytes",
+                    "name": "neighbors",
+                    "id": 1
+                },
+                {
+                    "rule": "optional",
+                    "type": "bytes",
+                    "name": "existing_index",
+                    "id": 2
+                },
+                {
+                    "rule": "optional",
+                    "type": "bytes",
+                    "name": "existing_entry_hash",
+                    "id": 3
+                }
+            ]
+        },
+        {
+            "name": "Entry",
+            "fields": [
+                {
+                    "rule": "optional",
+                    "type": "bytes",
+                    "name": "index",
+                    "id": 1
+                },
+                {
+                    "rule": "optional",
+                    "type": "uint64",
+                    "name": "version",
+                    "id": 2
+                },
+                {
+                    "rule": "optional",
+                    "type": "AuthorizationPolicy",
+                    "name": "update_policy",
+                    "id": 3
+                },
+                {
+                    "rule": "optional",
+                    "type": "bytes",
+                    "name": "profile_commitment",
+                    "id": 4
+                }
+            ]
+        },
+        {
+            "name": "SignedEntryUpdate",
+            "fields": [
+                {
+                    "rule": "optional",
+                    "type": "bytes",
+                    "name": "new_entry",
+                    "id": 1
+                },
+                {
+                    "rule": "map",
+                    "type": "bytes",
+                    "keytype": "fixed64",
+                    "name": "signatures",
+                    "id": 2
+                }
+            ]
+        },
+        {
+            "name": "Profile",
+            "fields": [
+                {
+                    "rule": "optional",
+                    "type": "bytes",
+                    "name": "nonce",
+                    "id": 1
+                },
+                {
+                    "rule": "map",
+                    "type": "bytes",
+                    "keytype": "string",
+                    "name": "keys",
+                    "id": 2
+                }
+            ]
+        },
+        {
+            "name": "SignedEpochHead",
+            "fields": [
+                {
+                    "rule": "optional",
+                    "type": "bytes",
+                    "name": "head",
+                    "id": 1
+                },
+                {
+                    "rule": "map",
+                    "type": "bytes",
+                    "keytype": "fixed64",
+                    "name": "signatures",
+                    "id": 2
+                }
+            ]
+        },
+        {
+            "name": "TimestampedEpochHead",
+            "fields": [
+                {
+                    "rule": "optional",
+                    "type": "EpochHead",
+                    "name": "head",
+                    "id": 1,
+                    "options": {
+                        "(gogoproto.customtype)": "EncodedEpochHead",
+                        "(gogoproto.nullable)": false
+                    }
+                },
+                {
+                    "rule": "optional",
+                    "type": "Timestamp",
+                    "name": "timestamp",
+                    "id": 2,
+                    "options": {
+                        "(gogoproto.nullable)": false
+                    }
+                }
+            ]
+        },
+        {
+            "name": "EpochHead",
+            "fields": [
+                {
+                    "rule": "optional",
+                    "type": "string",
+                    "name": "realm",
+                    "id": 1
+                },
+                {
+                    "rule": "optional",
+                    "type": "uint64",
+                    "name": "epoch",
+                    "id": 2
+                },
+                {
+                    "rule": "optional",
+                    "type": "bytes",
+                    "name": "root_hash",
+                    "id": 3
+                },
+                {
+                    "rule": "optional",
+                    "type": "Timestamp",
+                    "name": "issue_time",
+                    "id": 4,
+                    "options": {
+                        "(gogoproto.nullable)": false
+                    }
+                },
+                {
+                    "rule": "optional",
+                    "type": "bytes",
+                    "name": "previous_summary_hash",
+                    "id": 5
+                },
+                {
+                    "rule": "optional",
+                    "type": "AuthorizationPolicy",
+                    "name": "next_epoch_policy",
+                    "id": 6,
+                    "options": {
+                        "(gogoproto.nullable)": false
+                    }
+                }
+            ]
+        },
+        {
+            "name": "AuthorizationPolicy",
+            "fields": [
+                {
+                    "rule": "map",
+                    "type": "PublicKey",
+                    "keytype": "fixed64",
+                    "name": "public_keys",
+                    "id": 1
+                },
+                {
+                    "rule": "optional",
+                    "type": "QuorumExpr",
+                    "name": "quorum",
+                    "id": 2,
+                    "oneof": "policy_type"
+                }
+            ],
+            "oneofs": {
+                "policy_type": [
+                    2
+                ]
+            }
+        },
+        {
+            "name": "PublicKey",
+            "fields": [
+                {
+                    "rule": "optional",
+                    "type": "bytes",
+                    "name": "ed25519",
+                    "id": 1,
+                    "oneof": "pubkey_type"
+                }
+            ],
+            "oneofs": {
+                "pubkey_type": [
+                    1
+                ]
+            }
+        },
+        {
+            "name": "QuorumExpr",
+            "fields": [
+                {
+                    "rule": "optional",
+                    "type": "uint32",
+                    "name": "threshold",
+                    "id": 1
+                },
+                {
+                    "rule": "repeated",
+                    "type": "fixed64",
+                    "name": "candidates",
+                    "id": 2
+                },
+                {
+                    "rule": "repeated",
+                    "type": "QuorumExpr",
+                    "name": "subexpressions",
+                    "id": 3
+                }
+            ]
+        }
+    ],
+    "services": [
+        {
+            "name": "E2EKSPublic",
+            "options": {},
+            "rpc": {
+                "Lookup": {
+                    "request": "LookupRequest",
+                    "response": "LookupProof",
+                    "options": {}
+                },
+                "Update": {
+                    "request": "UpdateRequest",
+                    "response": "LookupProof",
+                    "options": {}
+                }
+            }
+        }
+    ]
+}
