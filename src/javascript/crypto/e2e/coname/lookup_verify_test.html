@@ -21,6 +21,7 @@
 <script>
 goog.require('goog.testing.jsunit');
 
+goog.require('e2e.ext.config');
 goog.require('e2e.coname.verifyLookup');
 </script>
 <script>
@@ -32,61 +33,6 @@ function base64ToByteArray(string) {
     }
     return ret;
 }
-
-var clientconfig = {
-    "realms": [{
-        "domains": ["yahoo-inc.com"],
-        "addr": "ks1.paranoids.corp.bf1.yahoo.com:4625",
-        "URL": "",
-        "VRFPublic": base64ToByteArray("rVetQeQaiGkrU01ModonIWEyf8MM5Yw88FdhAYctKrM="),
-        "verification_policy": {
-            "public_keys": {
-                "16574727844889599213": {
-                    "ed25519": base64ToByteArray("i/eTj1prLyKLgRl5NE4omtrC3xjVf2sowJzgdsSXKUs=")
-                },
-                "1702327623518731708": {
-                    "ed25519": base64ToByteArray("tnyH37Flkf9ne0yj8DbRmGgMg+MD8pZmZS7JUlQNX0Y=")
-                },
-                "5004056709842995553": {
-                    "ed25519": base64ToByteArray("zYQyJ9RRn3XosP0pMIm5fPqpTYDyAe1e/oxYtl6NoYE=")
-                }
-            },
-            "quorum": {
-                "threshold": 2,
-                "subexpressions": [{
-                    "threshold": 1,
-                    "candidates": ["5004056709842995553"]
-                }, {
-                    "threshold": 1,
-                    "candidates": ["16574727844889599213"]
-                }, {
-                    "threshold": 1,
-                    "candidates": ["1702327623518731708"]
-                }]
-            }
-        },
-        "epoch_time_to_live": {
-            "seconds": "180",
-            "nanos": 0
-        },
-        "client_tls": {
-            "certificates": [{
-                "certificate": ["MIIBTDCB+6ADAgECAhEAiZG0EutuQ2fmf+54JzKDDzAKBggqhkjOPQQDAjAUMRIwEAYDVQQDEwl0ZXN0aW5nQ0EwHhcNMTUxMDA3MjMyMDM1WhcNMTcxMDA3MjMyMDM1WjARMQ8wDQYDVQQDEwZjbGllbnQwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAARQ/VpiYFZjlilkwxDv5ECfULoolEVj2XP1Q8qRZG1HiKRqzev2Duo5X8teHX170PcuieVfctkCl82giFXlpILgozEwLzAOBgNVHQ8BAf8EBAMCAIAwHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCMAoGCCqGSM49BAMCA0AAMD0CHQCGlTQG0+qXWLCmcFJmVPYw1fSbPyJgoX8zCRfIAhw1pyS9ndYxC31CnMcEmh3QknYFSlfIpNd7WCh4"],
-                "key_id": "client.key.pem"
-            }],
-            "root_cas": ["MIIBODCB56ADAgECAhAZfpTyA7t/o8/UQFDuNnOEMAoGCCqGSM49BAMCMBQxEjAQBgNVBAMTCXRlc3RpbmdDQTAeFw0xNTEwMDcyMzE5NTZaFw0yNzAzMDUxNTE5NTZaMBQxEjAQBgNVBAMTCXRlc3RpbmdDQTBOMBAGByqGSM49AgEGBSuBBAAhAzoABBXxzbQHSHyRxsunXjDrObkYocJiCYnFmaikAOrnRy7Z98Znl5nKkzHPkUvBpxJjlM2RBH54wGkcoyYwJDAOBgNVHQ8BAf8EBAMCAIQwEgYDVR0TAQH/BAgwBgEB/wIBBDAKBggqhkjOPQQDAgNAADA9Ah0AvLpfgaYS6JUNt361g7gZy2211JRUf+UFBeL9hAIcfyULPYBqUnNtyGqvJeYxZ66g1Rt1cB12QyvaLw=="],
-            "server_name": "",
-            "client_auth": 0,
-            "prefer_server_cipher_suites": false,
-            "session_tickets_enabled": false,
-            "session_ticket_key_id": "",
-            "min_version": 0,
-            "max_version": 0
-        }
-    }]
-};
-
-// clientconfig.realms[0].tree_nonce = null;
 
 /**
  * Tests that e2e.coname.verifyLookup works
@@ -203,7 +149,7 @@ function testVerifyLookup() {
     // lookupProof.profile = base64ToByteArray(lookupProof.profile);
 
 
-	assertTrue(e2e.coname.verifyLookup(clientconfig, "adon@yahoo-inc.com", lookupProof, new Date()));
+	assertTrue(e2e.coname.verifyLookup(e2e.ext.config.CONAME, "adon@yahoo-inc.com", lookupProof));
 }
 
 

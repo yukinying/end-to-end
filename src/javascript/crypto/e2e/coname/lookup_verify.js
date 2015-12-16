@@ -537,12 +537,11 @@ e2e.coname.reconstructTreeAndLookup_ = function(
  * Refer to https://github.com/yahoo/coname/blob/master/lookup.go#L49-L90
  *
  * @param {object} cfg The config object
- * @param {string} user The username
+ * @param {string} user The userid (typically email address)
  * @param {object} pf The lookup proof retrieved from the keyserver
- * @param {Date} now The current time
  * @return {boolean} whether it is properly validated
  */
-e2e.coname.verifyLookup = function(cfg, user, pf, now) {
+e2e.coname.verifyLookup = function(cfg, user, pf) {
   var realm, root, verifiedEntryHash, entryHash;
 
   if (pf.user_id !== '' && pf.user_id !== user) {
@@ -562,7 +561,7 @@ e2e.coname.verifyLookup = function(cfg, user, pf, now) {
         'VerifyLookup: VRF verification failed');
   }
 
-  root = e2e.coname.verifyConsensus_(realm, pf.ratifications, now);
+  root = e2e.coname.verifyConsensus_(realm, pf.ratifications, new Date());
 
   verifiedEntryHash = e2e.coname.reconstructTreeAndLookup_(
       realm.tree_nonce || [], root, pf.index, pf.tree_proof);
